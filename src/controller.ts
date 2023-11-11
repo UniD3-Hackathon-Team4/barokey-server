@@ -4,6 +4,7 @@ import {
   fetchAllKeywords,
   fetchCrowdsByKeyword,
   fetchHeadlinesByKeyword,
+  fetchAllStations,
   Headline,
   Keyword,
   Station,
@@ -54,21 +55,11 @@ const getKeywordDetails: RequestHandler = async (req, res) => {
 }
 
 const getStationCrowds: RequestHandler = async (req, res) => {
+  const stations = await fetchAllStations();
   const response: StationCrowdsResponse = {
     "status": 200,
     "errMsg": "",
-    "stations": [
-      {
-        "name": "station1",
-        "crowds": 0.5,
-        "location": [0, 0]
-      },
-      {
-        "name": "station2",
-        "crowds": 0.4,
-        "location": [0, 0]
-      }
-    ]
+    "stations": stations
   };
   res.status(200).json(response);
 }

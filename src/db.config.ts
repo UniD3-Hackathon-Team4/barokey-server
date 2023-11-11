@@ -1,7 +1,8 @@
 import pkg from "pg";
+import * as process from "process";
 const { Pool } = pkg;
 
 const pool = new Pool({
-  connectionString: "postgres://postgres:postgres@localhost:5432/postgres"
+  connectionString: process.env.DB_CONN
 });
 export default pool;
