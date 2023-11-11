@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "module": "NodeNext",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "outDir": "dist"
+  },
+  "include": ["src/**/*"]
+}
