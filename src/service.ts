@@ -1,4 +1,5 @@
 type Coordinate = [number, number];
+import pool from "./db.config.js";
 
 interface Keyword {
   "keyword": string,
@@ -24,64 +25,20 @@ interface Station {
 }
 
 const fetchAllKeywords = async () => {
-  const keywords: Keyword[] = [
-    {
-      "keyword": "keyword1",
-      "weight": 1.5
-    },
-    {
-      "keyword": "keyword2",
-      "weight": 2.3
-    },
-    {
-      "keyword": "keyword3",
-      "weight": 5.0
-    }
-  ]
+  const res = await pool.query('SELECT distinct on(keyword) keyword, weight FROM headlines')
+  const keywords: Keyword[] = res.rows;
   return keywords;
 }
 
 const fetchHeadlinesByKeyword = async (keyword: string) => {
-  const headlines: Headline[] = [
-    {
-      "title": "title1",
-      "date": "2021-01-01",
-      "summary": "summary1",
-      "url": "url1"
-    },
-    {
-      "title": "title2",
-      "date": "2021-01-01",
-      "summary": "summary2",
-      "url": "url2"
-    },
-    {
-      "title": "title3",
-      "date": "2021-01-01",
-      "summary": "summary3",
-      "url": "url3"
-    },
-  ]
+  const res = await pool.query('SELECT title, timestamp as date, summary, link as url FROM headlines WHERE keyword = $1', [keyword]);
+  const headlines: Headline[] = res.rows;
   return headlines;
 }
 
 const fetchCrowdsByKeyword = async (keyword: string) => {
-  const crowds: Crowd[] = [
-    {
-      "congestion": 0.5,
-      "geodata": [
-        [0, 0],
-        [1, 1],
-      ]
-    },
-    {
-      "congestion": 0.7,
-      "geodata": [
-        [1, 1],
-        [2, 3],
-      ]
-    }
-  ]
+  const res = await pool.query('SELECT subway as congestion, geojson as geodata FROM crowds JOIN geo ON geo.name = crowds.geo_name limit 7');
+  const crowds: Crowd[] = res.rows;
   return crowds;
 }
 

@@ -7,8 +7,8 @@ import {
 
 const router = Router();
 
-router.use("/keywords", getAllKeywords);
 router.use("/keywords/:keyword", getKeywordDetails);
+router.use("/keywords", getAllKeywords);
 router.use("/station-crowds", getStationCrowds);
 
 export { router };
