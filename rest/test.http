@@ -1,1 +1,8 @@
-GET {{baseUrl}}
+###
+GET {{baseUrl}}/keywords
+
+###
+GET {{baseUrl}}/keywords/foobar
+
+###
+GET {{baseUrl}}/station-crowds
